@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <!--通过CDN引入vue.js源代码-->
+        <script type="text/javascript" src="/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <input type="text" v-model='variable'/>
+            <br>
+            <button @click='clickEvent'>click</button>
+            <ul>
+                <li v-for='(item, index) of list'>{{item}}</li>
+            </ul>
+            <hr>
+            <h4>使用组件形式</h4>
+            <ul>
+                <todo-list v-for="(item, index) of list" :key="index" :content="item" :index="index" @delete="handleDelete"></todo-list>
+            </ul>
+
+        </div>
+
+        <script>
+
+            //这是全局的组建可以被用于这个项目中的任何地方。
+            Vue.component('todo-list',{
+                props: ['content','index'],
+                template: '<li @click="handleClick">{{content}} {{index}}</li>',
+                methods:{
+                    handleClick: function(){
+                        this.$emit('delete',this.index);
+                    }
+                }
+            });
+
+
+             new Vue({
+                el: "#root",
+                data:{
+                    variable: '',
+                    list: []
+                },
+                methods:{
+                    clickEvent: function(){
+                        this.list.push(this.variable);
+                        this.variable= '';
+                    },
+                    handleDelete: function(index){
+                        this.list.splice(index,1);
+                    }
+                }
+                
+             });
+        </script>
+    </body>
+
+</html>

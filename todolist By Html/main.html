@@ -1,0 +1,158 @@
+<!-- <!DOCTYPE html>
+练习1
+<html lang="en">
+<head>
+  <title>TodoListByHtml</title>
+  <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+  <h3>element:root</h3>
+  <div id="root">
+    <div>
+      {{msg}}
+    </div>
+    <div v-html="htmlInput">
+    
+    </div>
+    <div v-text="textInput">
+    
+    </div>
+    <div v-on:click="clickFunction">
+      {{clickText}}
+    </div>
+  </div>
+  <hr>
+
+  <h3>element:app-2</h3>
+  <div id="app-2">
+    <span v-bind:title="message">
+      鼠标悬停几秒钟查看此处动态绑定信息
+    </span>
+    <br>
+    <input :value="content">
+    <input v-model="content">
+    <div>{{content}}</div>
+  </div>
+  <hr>
+
+  <h3>element:app-3</h3>
+  <div id="app-3">
+    first name: <input v-model="firstname"/>
+    last name: <input v-model="lastname"/>
+    <br>
+    full name: <div>{{fullname}}</div>
+  </div>
+  
+
+  <script>
+    var root = new Vue({
+      el: "#root",
+      data: {
+        msg: "this is a message1",
+        htmlInput: "<b>this is a test text</b>",
+        textInput: "<b>this is a text text</b>",
+        clickText: "click here"
+      },
+      
+      methods: {
+        clickFunction: function() {
+          root.clickText = "congretulation"
+        }
+      }
+    });
+
+    var app2 = new Vue({
+      el: '#app-2',
+      data: {
+        message:'页面加载于' + new Date().toLocaleString(),
+        content:'this is a content'
+      }
+      });
+  
+      var app3 = new Vue({
+        el: '#app-3',
+        data: {
+          firstname: '',
+          lastname: '',
+        },
+  
+        computed: {
+          fullname: function() {
+            return this.firstname + ' ' + this.lastname;
+          }
+        }
+        });
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>todolist_demo</title>
+  <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+  <div id="root">
+    <div>
+    <input type="text" v-model="variable" />
+    <br>
+    <button @click="clickEvent"> click </button>
+    <ul>
+      <li < v-for="item in list">
+        {{ item }}
+      </li>
+    </ul>
+    </div>
+
+    <hr>
+
+    <div>
+    <h4>组件形式</h4>
+    <ul>
+      <todo-list v-for="(item, index) in items" :key="index" :content="item" :inden="index" @delete="handleDelete" />
+    </ul>
+    </div>
+  </div>
+</body>
+
+<script>
+  Vue.components(
+    'todo-list', {
+      props: [
+        'content',
+        'index'
+      ],
+
+      template: '<li @click="handleClick">{{content}} {{index}}</li>',
+
+      mothods: {
+        handleClick: function () {
+          this.$emit('delete', this.index);
+        }
+      }
+    }
+  );
+
+  new Vue({
+    el: "#root",
+    data: {
+      variable: '',
+      list: []
+    },
+
+    methods: {
+      clickEvent: function() {
+        this.list.push(this.variable);
+        this.variable = '';
+      },
+      hadleDelete: function(index) {
+        this.list.splice(index, 1);
+      }
+    }
+  })
+
+</script>
+</html>
