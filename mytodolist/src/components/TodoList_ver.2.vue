@@ -3,7 +3,7 @@
   <!-- function1 增 -->
   <input type="text" class="new-todo" placeholder="你接下来要做什么" v-model="newTodo" @keyup.enter="addTodo">
   
-  <!-- function2 同步修改、删 -->
+  <!-- function2 同步改、删 -->
   <ul>
     <li v-for="todo in todos"
       class="new-todo"
