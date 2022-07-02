@@ -1,3 +1,5 @@
 exports.install = function (Vue, options) {
-  // Vue.prototype.xxx = function () {}
+  // Vue.prototype.timer = function () {
+
+  // }
 }
